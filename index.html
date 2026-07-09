@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UX/UI Experiment: Dark Patterns vs Good Design</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* 여기서부터 원래의 다크패턴 실험용 CSS 스타일 구조가 깨끗하게 이어져야 합니다 */
         :root {
             --primary: #2563eb;
             --primary-hover: #1d4ed8;
@@ -21,10 +20,9 @@
             --gray-600: #475569;
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', 'Noto Sans KR', sans-serif; }
         body { background-color: #f4f6f9; color: var(--dark); overflow-x: hidden; }
-
+  
         /* 실시간 대시보드 스티키 바 */
         #stats-bar { display: none; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px); color: white; padding: 14px 40px; position: fixed; top: 0; left: 0; width: 100%; font-size: 14px; z-index: 9999; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .stat-item span { color: #60a5fa; font-weight: 700; }
