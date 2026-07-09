@@ -123,7 +123,6 @@
 </head>
 <body>
 
-    <!-- 실시간 상태 대시보드 바 -->
     <div id="stats-bar">
         <div class="stat-item">참가자: <span id="current-user">-</span></div>
         <div class="stat-item">테스트 모드: <span id="current-mode">-</span></div>
@@ -131,7 +130,6 @@
         <div class="stat-item">경과 시간: <span id="timer">0</span>초</div>
     </div>
 
-    <!-- [스크린 1] 시작 화면 -->
     <div class="intro-container" id="screen-start" style="display: block;">
         <h1 class="intro-title">🔍 탈퇴 여정 다크패턴 데이터 수집 실험</h1>
         <p class="intro-desc">참가자의 식별 정보(이름/번호)를 입력한 뒤 모드를 선택해 주세요. 모든 참가 데이터는 누적되어 엑셀(CSV) 파일로 통합 추출이 가능합니다.</p>
@@ -153,7 +151,6 @@
         </div>
     </div>
 
-    <!-- [스크린 2] 쇼핑몰 홈화면 -->
     <div class="screen" id="screen-home">
         <div class="shop-header">
             <div class="shop-logo" onclick="alert('메인 브랜드 로고입니다.')">TRENDY LAB.</div>
@@ -185,7 +182,6 @@
         </div>
     </div>
 
-    <!-- [스크린 3] 마이페이지 화면 -->
     <div class="screen" id="screen-mypage">
         <div class="shop-header">
             <div class="shop-logo">TRENDY LAB.</div>
@@ -222,7 +218,6 @@
         </div>
     </div>
 
-    <!-- [스크린 4] 다크 패턴 설문조사 -->
     <div class="screen" id="screen-survey">
         <div class="flow-container">
             <h2 class="flow-title">떠나시기 전 필수 확인 🚨</h2>
@@ -243,7 +238,6 @@
         </div>
     </div>
 
-    <!-- [스크린 5] 최종 확인 화면 -->
     <div class="screen" id="screen-confirm">
         <div class="flow-container">
             <h2 class="flow-title">최종 의사 결정 확인</h2>
@@ -266,7 +260,6 @@
         </div>
     </div>
 
-    <!-- [스크린 6] 결과 분석 보고서 리포트 -->
     <div class="screen" id="screen-result">
         <div class="flow-container" style="max-width: 750px; padding: 40px 20px;">
             <h2 style="color: #22c55e; font-size: 32px; margin-bottom: 8px;">📊 실험 데이터 분석 보고서</h2>
@@ -326,179 +319,4 @@
         function countChar(val) {
             let len = val.value.length;
             document.getElementById('char-num').innerText = len;
-            document.getElementById('char-num').style.color = len >= 30 ? '#22c55e' : 'var(--gray-400)';
-        }
-
-        // 이름 입력 검증 후 게임 구동
-        function checkNameAndStart(selectedMode) {
-            const inputName = document.getElementById('user-name').value.trim();
-            if(!inputName) {
-                alert('⚠️ 통계 처리를 위해 참가자 이름 또는 식별 코드를 반드시 입력해 주세요.');
-                return;
-            }
-            userName = inputName;
-            startGame(selectedMode);
-        }
-
-        function startGame(selectedMode) {
-            mode = selectedMode;
-            document.getElementById('screen-start').style.display = 'none';
-            document.getElementById('stats-bar').style.display = 'flex';
-            document.getElementById('current-user').innerText = userName;
-            document.getElementById('current-mode').innerText = mode === 'good' ? '😇 좋은 UX' : '😈 다크 패턴';
-            
-            startTime = Date.now();
-            timerInterval = setInterval(() => {
-                document.getElementById('timer').innerText = Math.floor((Date.now() - startTime) / 1000);
-            }, 1000);
-
-            const navBar = document.getElementById('home-header-nav');
-            if(mode === 'good') {
-                navBar.innerHTML = `
-                    <a href="#" onclick="alert('장바구니가 비어있습니다.')">장바구니</a>
-                    <a href="#" onclick="nextStep('screen-mypage')" style="color:var(--primary); font-weight:bold;">마이페이지</a>
-                `;
-            } else {
-                navBar.innerHTML = `
-                    <a href="#" style="color:var(--danger); font-weight:600;" onclick="alert('선착순 마감되었습니다.')">⚡ 타임세일 반값 특가</a>
-                    <a href="#" onclick="alert('진행중인 기획전이 없습니다.')">기획전</a>
-                    <a href="#" onclick="openDarkHiddenMenu()">고객센터</a>
-                `;
-                document.getElementById('dark-banner-area').innerHTML = `
-                    <div class="annoying-banner">
-                        <span>⚠️ 경고: 현재 소멸 예정인 미사용 골드 쿠폰패키지가 4장 남아있습니다!</span>
-                        <button class="btn-dark" style="font-size:11px; padding:6px 12px;" onclick="alert('쿠폰 유효기간이 연장되었습니다.')">쿠폰 보존하기</button>
-                    </div>
-                `;
-            }
-            nextStep('screen-home');
-        }
-
-        function triggerDarkObstruction(type) {
-            if(type === '휴면') alert('🚨 [오류] 고객님은 현재 미정산 포인트 잔액(24,500P)이 존재하여 임시 휴면 전환이 불가능합니다. 영구 삭제를 통해서만 정리가 가능합니다.');
-            else if(type === '알림전환') alert('🚨 [처리 실패] 시스템 마이그레이션 중에는 알림 단독 비활성화가 제한됩니다.');
-            else if(type === 'coupon') alert('😈 다크패턴 방해 작동: 지급 조건 미달로 특별 쿠폰 발행이 취소되었습니다. 탈퇴 과정을 계속 진행하셔야 합니다.');
-        }
-
-        function openDarkHiddenMenu() {
-            alert('ℹ️ 안내: 찾으시는 메뉴가 보이지 않으시면 화면 스크롤을 맨 아래로 내려보세요.');
-            document.getElementById('dark-footer-hidden').style.display = 'block';
-        }
-
-        function nextStep(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-
-            if(screenId === 'screen-mypage') {
-                if(mode === 'good') document.getElementById('good-sidebar-withdrawal').style.display = 'block';
-                else document.getElementById('dark-mypage-content').style.display = 'block';
-            }
-            if(screenId === 'screen-confirm') {
-                document.getElementById(mode + '-confirm').style.display = 'block';
-            }
-        }
-
-        function validateSurvey() {
-            const text = document.getElementById('survey-text').value;
-            const checked = document.getElementById('dark-check').checked;
-            if(text.length < 30) { alert('⚠️ 다크 패턴 트릭 방해: 사유를 최소 30자 이상 구체적으로 적어주셔야 다음 접수 단계 버튼이 승인됩니다.'); return; }
-            if(!checked) { alert('⚠️ 약관 포기 서류에 필수 동의 체크박스를 체크하셔야 프로세스가 이행됩니다.'); return; }
-            nextStep('screen-confirm');
-        }
-
-        function endGame() {
-            clearInterval(timerInterval);
-            document.getElementById('stats-bar').style.display = 'none';
-            let finalTime = Math.floor((Date.now() - startTime) / 1000);
-            
-            nextStep('screen-result');
-            
-            const modeName = mode === 'good' ? '😇 좋은 UX' : '😈 다크 패턴';
-            document.getElementById('res-name').innerText = userName;
-            document.getElementById('res-mode').innerText = modeName;
-            document.getElementById('res-clicks').innerText = clicks + " 회";
-            document.getElementById('res-time').innerText = finalTime + " 초";
-
-            saveResultToStorage(userName, modeName, clicks, finalTime);
-            loadHistoryTable();
-
-            let analysisText = "";
-            if(mode === 'good') {
-                analysisText = "<strong>😇 실험 결과 분석 요약:</strong><br>투명한 UX에서는 사용자가 인지 부하 없이 빠르게 목적지에 도달했습니다. 불필요한 이탈 차단 장치가 없는 정석적이고 정직한 사용자 경험 구조입니다.";
-            } else {
-                analysisText = "<strong>😈 실험 결과 분석 요약:</strong><br>다크 패턴의 악랄함이 수치로 입증되었습니다. 메뉴 숨기기, 우회 방지 경고창 루프, 30자 이상 글자 수 제한 제약 등을 통해 <strong>좋은 설계 대비 클릭 수와 소요 시간이 폭발적으로 늘어남</strong>을 아래 누적 데이터 대시보드와 다운로드받은 엑셀 파일로 증명해 보세요.";
-            }
-            document.getElementById('res-analysis').innerHTML = analysisText;
-        }
-
-        function saveResultToStorage(pName, modeName, finalClicks, finalTime) {
-            const now = new Date();
-            const timeString = `${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-            
-            const newRecord = { date: timeString, name: pName, mode: modeName, clicks: finalClicks, time: finalTime };
-            let history = JSON.parse(localStorage.getItem('ux_global_history')) || [];
-            history.push(newRecord);
-            localStorage.setItem('ux_global_history', JSON.stringify(history));
-        }
-
-        function loadHistoryTable() {
-            const history = JSON.parse(localStorage.getItem('ux_global_history')) || [];
-            const historyBox = document.getElementById('history-box');
-            
-            if(history.length === 0) {
-                historyBox.innerHTML = `<tr><td colspan="5" style="padding:15px; color:var(--gray-400);">데이터 저장소가 비어있습니다.</td></tr>`;
-                return;
-            }
-
-            let html = "";
-            history.slice().reverse().forEach(item => {
-                const modeColor = item.mode.includes('좋은') ? 'color: #2563eb; font-weight:bold;' : 'color: #ef4444; font-weight:bold;';
-                html += `
-                    <tr style="border-bottom: 1px solid var(--gray-200);">
-                        <td style="padding: 8px; border: 1px solid var(--gray-200); color:var(--gray-600);">${item.date}</td>
-                        <td style="padding: 8px; border: 1px solid var(--gray-200); font-weight:600;">${item.name}</td>
-                        <td style="padding: 8px; border: 1px solid var(--gray-200); ${modeColor}">${item.mode}</td>
-                        <td style="padding: 8px; border: 1px solid var(--gray-200);">${item.clicks}회</td>
-                        <td style="padding: 8px; border: 1px solid var(--gray-200); font-weight:500;">${item.time}초</td>
-                    </tr>
-                `;
-            });
-            historyBox.innerHTML = html;
-        }
-
-        function exportToCSV() {
-            const history = JSON.parse(localStorage.getItem('ux_global_history')) || [];
-            if(history.length === 0) {
-                alert('다운로드할 통계 데이터가 존재하지 않습니다.');
-                return;
-            }
-
-            let csvContent = "\uFEFF"; 
-            csvContent += "실험일시,참가자식별코드,테스트모드,누적클릭수(회),소요시간(초)\n";
-
-            history.forEach(item => {
-                let cleanMode = item.mode.replace('😇 ', '').replace('😈 ', '');
-                csvContent += `"${item.date}","${item.name}","${cleanMode}",${parseInt(item.clicks)},${parseInt(item.time)}\n`;
-            });
-
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            
-            link.setAttribute("href", url);
-            link.setAttribute("download", `ux_darkpattern_results_${new Date().toISOString().slice(0,10)}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function clearHistory() {
-            if(confirm('🚨 주의: 모든 참가자의 실험 데이터 파일이 지워집니다. 진행하시겠습니까?')) {
-                localStorage.removeItem('ux_global_history');
-                loadHistoryTable();
-            }
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('char-num').style.color = len >= 30 ?
