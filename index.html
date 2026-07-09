@@ -132,16 +132,16 @@
 
     <div class="intro-container" id="screen-start" style="display: block;">
         <h1 class="intro-title">🔍 탈퇴 여정 다크패턴 데이터 수집 실험</h1>
-        <p class="intro-desc">참가자의 식별 정보(이름/번호)를 입력한 뒤 모드를 선택해 주세요. 모든 참가 데이터는 누적되어 엑셀(CSV) 파일로 통합 추출이 가능합니다.</p>
+        <p class="intro-desc">참가자의 이름을 입력한 뒤 모드를 선택해 주세요. 모든 참가 데이터는 누적되어 엑셀(CSV) 파일로 통합 추출이 가능합니다.</p>
         
         <div class="name-input-box">
-            <label for="user-name">실험 참가자 식별 명칭 (예: 홍길동01 또는 피실험자A)</label>
+            <label for="user-name">실험 참가자 이름을 입력하세요 </label>
             <input type="text" id="user-name" class="name-input" placeholder="이름이나 식별 코드를 입력하세요.">
         </div>
 
         <div class="mode-select-box">
             <div class="mode-card" onclick="checkNameAndStart('good')">
-                <h3>😇 좋은 UX 모드</h3>
+                <h3>😇 좋은 UI/UX 모드</h3>
                 <p>투명하고 정직한 설계 구조.<br>원하는 메뉴에 즉각 도달할 수 있습니다.</p>
             </div>
             <div class="mode-card" onclick="checkNameAndStart('dark')" style="background: #fafafa;">
@@ -336,7 +336,7 @@
             document.getElementById('screen-start').style.display = 'none';
             document.getElementById('stats-bar').style.display = 'flex';
             document.getElementById('current-user').innerText = userName;
-            document.getElementById('current-mode').innerText = mode === 'good' ? '😇 좋은 UX' : '😈 다크 패턴';
+            document.getElementById('current-mode').innerText = mode === 'good' ? '😇 좋은 UI/UX' : '😈 다크 패턴';
             
             startTime = Date.now();
             timerInterval = setInterval(() => {
@@ -372,7 +372,7 @@
         }
 
         function openDarkHiddenMenu() {
-            alert('ℹ️ 안내: 찾으시는 메뉴가 보이지 않으시면 화면 스크롤을 맨 아래로 내려보세요.');
+            alert('ℹ️ 고객 센터 입니다.');
             document.getElementById('dark-footer-hidden').style.display = 'block';
         }
 
@@ -405,7 +405,7 @@
             
             nextStep('screen-result');
             
-            const modeName = mode === 'good' ? '😇 좋은 UX' : '😈 다크 패턴';
+            const modeName = mode === 'good' ? '😇 좋은 UI/UX' : '😈 다크 패턴';
             document.getElementById('res-name').innerText = userName;
             document.getElementById('res-mode').innerText = modeName;
             document.getElementById('res-clicks').innerText = clicks + " 회";
@@ -417,7 +417,7 @@
 
             let analysisText = "";
             if(mode === 'good') {
-                analysisText = "<strong>😇 실험 결과 분석 요약:</strong><br>투명한 UX에서는 사용자가 인지 부하 없이 빠르게 목적지에 도달했습니다. 불필요한 이탈 차단 장치와 억지 설문조사 단계를 생략하여 **압도적으로 낮은 클릭 수와 소요 시간**을 기록하는 정석적인 구조입니다.";
+                analysisText = "<strong>😇 실험 결과 분석 요약:</strong><br>투명한 UI/UX에서는 사용자가 인지 부하 없이 빠르게 목적지에 도달했습니다. 불필요한 이탈 차단 장치와 억지 설문조사 단계를 생략하여 **압도적으로 낮은 클릭 수와 소요 시간**을 기록하는 정석적인 구조입니다.";
             } else {
                 analysisText = "<strong>😈 실험 결과 분석 요약:</strong><br>다크 패턴의 악랄함이 수치로 입증되었습니다. 메뉴 교묘하게 숨기기, 탈퇴 전 조건 제한 루프, 약관 동의 유도 등을 배치하여 **좋은 설계 대비 사용성의 비효율성이 폭발적으로 늘어남**을 실시간 대시보드로 증명할 수 있습니다.";
             }
